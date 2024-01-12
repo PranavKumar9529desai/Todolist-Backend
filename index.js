@@ -68,8 +68,8 @@ app.put("/completed",async function(req,res){
 
 
 app.delete("/delete:id",async function(req,res){
-   const task_id = req.params.id;
-   console.log(task_id);
+   const task_id = req.body.id;
+   console.log(req.body);
    try {
     const DeleteStatus = await todo.deleteOne({_id : task_id } , {completed : true });
    res.status(200).send({
