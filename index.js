@@ -80,8 +80,12 @@ app.delete("/delete",async function(req,res){
    res.status(200).send({
      msg : 'Sucessfully deleted the task' ,
      deatails : DeleteStatus});
-    
 })
+
+app.use((err, req, res, next) => {
+    console.error(err.stack); // Log error stack trace to the console
+    res.status(500).send({ message: 'An unexpected error occurred' });
+});
 
 
 app.listen(PORT || 3000 ,function(req,res){
