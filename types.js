@@ -12,9 +12,6 @@ const UpdateTodo = z.object({
 });
 
 const DeleteTodo = z.object({
-    title : z.string(),
-    description : z.string(),
-    completed : z.boolean(),
     id : z.string()
 });
 
