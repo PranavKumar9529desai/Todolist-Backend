@@ -68,11 +68,17 @@ app.put("/completed",async function(req,res){
 
 
 app.delete("/delete:id",async function(req,res){
-    const task_id = req.params.id;
-   const DeleteStatus = await todo.deleteOne({_id : task_id } , {completed : true });
+   const task_id = req.params.id;
+   console.log(task_id);
+   try {
+    const DeleteStatus = await todo.deleteOne({_id : task_id } , {completed : true });
    res.status(200).send({
      msg : 'Sucessfully deleted the task' ,
-     deatails : DeleteStatus});
+     deatails : DeleteStatus})
+   } catch (error) {
+       console.log(error);
+   }
+   ;
 })
 
 app.listen(PORT || 3000 ,function(req,res){
