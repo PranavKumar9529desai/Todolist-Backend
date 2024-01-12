@@ -71,6 +71,7 @@ app.delete("/delete",async function(req,res){
     const Task = req.body ;
     console.log(Task);
     const deleletedTask = DeleteTodo.safeParse(Task);
+    console.log(deleletedTask);
     if(!deleletedTask.success) {
         res.status(400).json( {
         msg : "authentication failed ",
