@@ -2,7 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const {todo} = require('./db');
 const app = express();
-const { UpdateTodo , CreateTodo , DeleteTodo } = require('./types');
+const { UpdateTodo , CreateTodo } = require('./types');
 const { Mongoose } = require('mongoose');
 const cors = require('cors');
 const { error } = require('console');
@@ -67,17 +67,9 @@ app.put("/completed",async function(req,res){
 });
 
 
-app.delete("/delete",async function(req,res){
-    const Task = req.body ;
-    console.log(Task);
-    const deleletedTask = DeleteTodo.safeParse(Task);
-    console.log(deleletedTask);
-    if(!deleletedTask.success) {
-        res.status(400).json( {
-        msg : "authentication failed ",
-        error : 'task with particular id does not exist'});
-    }
-   const DeleteStatus = await todo.deleteOne({_id : req.body.id } , {completed : true });
+app.delete("/delete:id",async function(req,res){
+    const task_id = req.params.id;
+   const DeleteStatus = await todo.deleteOne({_id : task_id } , {completed : true });
    res.status(200).send({
      msg : 'Sucessfully deleted the task' ,
      deatails : DeleteStatus});

@@ -11,13 +11,8 @@ const UpdateTodo = z.object({
     id : z.string(),
 });
 
-const DeleteTodo = z.object({
-    id : z.string()
-});
-
-
 module.exports = {
     CreateTodo : CreateTodo ,
     UpdateTodo : UpdateTodo ,
-    DeleteTodo : DeleteTodo ,
+    
 }
