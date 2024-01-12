@@ -67,7 +67,7 @@ app.put("/completed",async function(req,res){
 });
 
 
-app.delete("/delete:id",async function(req,res){
+app.delete("/delete",async function(req,res){
    const task_id = req.body.id;
    console.log(req.body);
    try {
