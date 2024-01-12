@@ -69,6 +69,7 @@ app.put("/completed",async function(req,res){
 
 app.delete("/delete",async function(req,res){
     const Task = req.body ;
+    console.log(Task);
     const deleletedTask = DeleteTodo.safeParse(Task);
     if(!deleletedTask.success) {
         res.status(400).json( {
