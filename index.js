@@ -55,22 +55,22 @@ app.post("/todo",async function(req,res){
 app.put("/completed",async function(req,res){
     const taskData = req.body;
     const updatedTask = UpdateTodo.safeParse(taskData);
-
+    if(!updatedTask.success) {
+        res.status(400).send( {msg : "authentication failed"});
+    }
     try {
-        if(!updatedTask.success) {
-            res.status(400).send( {msg : "authentication failed"});
-        }
-        else {
-            const updatedStatusOfTask = await todo.updateOne({_id : req.body.id } , {completed : true });
-            res.status(200).send({
-            msg : 'Status of the Task is sucessfully updated',
-            details : updatedStatusOfTask });
-        }
-        
-        
+        const updatedStatusOfTask = await todo.findOneAndUpdate(
+            { _id: req.body.id },
+            { completed: true },
+            { new: true }  // This option makes the function return the updated document
+        );
+        res.status(200).send({
+            msg: 'Status of the Task is successfully updated',
+            details: updatedStatusOfTask
+        });
     } catch (error) {
-        console.log(error);
-        
+        console.error(error);
+        res.status(500).send({ msg: 'An unexpected error occurred' });
     }
    
 });
