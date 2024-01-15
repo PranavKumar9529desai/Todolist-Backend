@@ -53,10 +53,14 @@ app.post("/todo",async function(req,res){
 
 
 app.put("/completed",async function(req,res){
+    console.log('COMPLETED')
     const taskData = req.body;
+    console.log('COMPLETED2')
+
     const updatedTask = UpdateTodo.safeParse(taskData);
+    let authMsg = "none";
     if(!updatedTask.success) {
-        res.status(400).send( {msg : "authentication failed"});
+        authMsg = "authentication failed"
     }
     try {
         const updatedStatusOfTask = await todo.findOneAndUpdate(
@@ -64,13 +68,13 @@ app.put("/completed",async function(req,res){
             { completed: true },
             { new: true }  // This option makes the function return the updated document
         );
-        res.status(200).send({
-            msg: 'Status of the Task is successfully updated',
+        res.status(200).json({
+            authMsg: authMsg,
             details: updatedStatusOfTask
         });
     } catch (error) {
         console.error(error);
-        res.status(500).send({ msg: 'An unexpected error occurred' });
+        res.status(500).json({ msg: 'An unexpected error occurred' });
     }
    
 });
